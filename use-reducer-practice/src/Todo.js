@@ -1,7 +1,15 @@
-import React from 'react'
-import { ACTIONS } from './App.js'
+import React, { useReducer } from 'react'
+import { ACTIONS } from './utils/actions'
+import { useGlobalState } from './utils/globalState'
+// import { useGlobalState } from './utils/globalState'
 
-export default function Todo({ todo, dispatch }) {
+import { reducer } from './utils/reducers'
+
+
+export default function Todo({ todo }) {
+
+// const [ state, dispatch ] = useGlobalState();
+const [state, dispatch] = useReducer(reducer, []);
     return (
         <div>
             <span style={{ color: todo.complete ? 'green' : 'red'}}>

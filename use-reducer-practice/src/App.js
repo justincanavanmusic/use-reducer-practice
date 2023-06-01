@@ -1,64 +1,55 @@
 import React, { useReducer, useState } from "react";
+import { useTodoReducer } from './utils/reducers'
+import { reducer } from './utils/reducers'
 import Todo from "./Todo.js";
+import { ACTIONS } from './utils/actions.js'
+// import { reducer } from './utils/reducers.js'
+import { TodoProvider, useGlobalState } from './utils/globalState'
 
-export const ACTIONS = {
-  ADD_TODO: "add-todo",
-  TOGGLE_TODO: "toggle-todo",
-  DELETE_TODO: "delete-todo",
-};
-
-function reducer(state, action) {
-  switch (action.type) {
-    case ACTIONS.ADD_TODO:
-      return [...state, newTodo(action.payload.name)];
-
-    case ACTIONS.TOGGLE_TODO:
-      return state.map((todo) => {
-        if (todo.id === action.payload.id) {
-          return { ...todo, complete: !todo.complete };
-        }
-        return todo;
-      });
-
-    case ACTIONS.DELETE_TODO:
-      return state.filter((todo) => todo.id !== action.payload.id);
-
-    default:
-      return state;
-  }
-}
-
-function newTodo(name) {
-  return {
-    id: Date.now(),
-    name: name,
-    complete: false,
-  };
-}
 
 function App() {
-  const [state, dispatch] = useReducer(reducer, []);
-  const [name, setName] = useState("");
+  // const [state, dispatch] = useReducer(reducer, []);
+  const [state, dispatch] = useGlobalState();
+  // const globalState = useGlobalState();
+  // const { todoName } = state;
+  // const [state, dispatch] = useTodoReducer({
+  //   todoName: 'test',
+  // });
+  const [ todoName, setTodoName ] = useState("");
+
+  // console.log(todoName)
+  console.log(`Global State: `, globalState)
+
 
   function handleSubmit(e) {
     e.preventDefault();
-    dispatch({ type: ACTIONS.ADD_TODO, payload: { name: name } });
-    setName('');
+    globalState.addTodo(e.target.value)
+    // setTodoName('');
   }
-  console.log(state);
+
+  // console.log(todoName);
+  console.log(todoName)
+
 
   return (
     <>
+    <TodoProvider>
       <form onSubmit={handleSubmit}>
         <input
           type="text"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
+          value={todoName}
+          onChange={(e) => setTodoName(e.target.value)}
+          //   dispatch({
+          //   type: ACTIONS.SET_NAME,
+          //   payload: { todoName : e.target.value },
+          // })}
         />
       </form>
-      {state.map((todo) => {
-        return <Todo key={todo.id} todo={todo} dispatch={dispatch} />;
-      })}
+      {/* <p>{todoName}</p> */}
+      {/* {todoName.map((todo) => {
+        return <Todo key={todo.id} todo={todo} />;
+      })} */}
+      </TodoProvider>
     </>
   );
 }
