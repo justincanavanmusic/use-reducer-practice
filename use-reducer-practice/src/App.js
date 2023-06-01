@@ -3,13 +3,12 @@ import { useTodoReducer } from './utils/reducers'
 import { reducer } from './utils/reducers'
 import Todo from "./Todo.js";
 import { ACTIONS } from './utils/actions.js'
-// import { reducer } from './utils/reducers.js'
 import { TodoProvider, useGlobalState } from './utils/globalState'
 
 
 function App() {
-  // const [state, dispatch] = useReducer(reducer, []);
-  const [state, dispatch] = useGlobalState();
+  const [state, dispatch] = useReducer(reducer, []);
+  // const [state, dispatch] = useGlobalState();
   // const globalState = useGlobalState();
   // const { todoName } = state;
   // const [state, dispatch] = useTodoReducer({
@@ -18,22 +17,24 @@ function App() {
   const [ todoName, setTodoName ] = useState("");
 
   // console.log(todoName)
-  console.log(`Global State: `, globalState)
+  console.log(state);
+
 
 
   function handleSubmit(e) {
     e.preventDefault();
-    globalState.addTodo(e.target.value)
-    // setTodoName('');
+    dispatch({ type: ACTIONS.ADD_TODO, payload: { name: todoName } });
+    // globalState.addTodo(e.target.value)
+    setTodoName('');
   }
 
   // console.log(todoName);
-  console.log(todoName)
+  // console.log(todoName)
 
 
   return (
     <>
-    <TodoProvider>
+    {/* <TodoProvider> */}
       <form onSubmit={handleSubmit}>
         <input
           type="text"
@@ -46,10 +47,10 @@ function App() {
         />
       </form>
       {/* <p>{todoName}</p> */}
-      {/* {todoName.map((todo) => {
-        return <Todo key={todo.id} todo={todo} />;
-      })} */}
-      </TodoProvider>
+      {state.map((todo) => {
+        return <Todo key={todo.id} todo={todo} dispatch={dispatch} />;
+      })}
+      {/* </TodoProvider> */}
     </>
   );
 }

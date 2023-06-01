@@ -12,24 +12,26 @@ function newTodo(name) {
 export const reducer = (state, action) => {
     switch (action.type) {
       case ACTIONS.ADD_TODO:
-        const todo = newTodo(action.payload.todoName)
-        // console.log(newTodo);
-        return {...state, todo};
+        // const todo = newTodo(action.payload.todoName)
+        // // console.log(newTodo);
+        // return {...state, todo};
+      return [...state, newTodo(action.payload.name)];
   
-        case ACTIONS.SET_NAME:
-          console.log(state);
-          return {...state,
-            todoName: action.payload.todoName,
-            };
+        // case ACTIONS.SET_NAME:
+        //   console.log(state);
+        //   return {...state,
+        //     todoName: action.payload.todoName,
+        //     };
 
       case ACTIONS.TOGGLE_TODO:
-        const todos = state.todos.map((todo) => {
+        return state.map((todo) => {
           if (todo.id === action.payload.id) {
             console.log(action)
             return { ...todo, complete: !todo.complete };
           }
-          state.todos = todos;
-          return state;
+          // state.todos = todos;
+          // return state;
+          return todo;
         });
   
       case ACTIONS.DELETE_TODO:
