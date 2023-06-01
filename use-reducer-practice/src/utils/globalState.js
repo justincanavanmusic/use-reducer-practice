@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useReducer, useState } from 'react';
 import { useTodoReducer } from './reducers'
 import { reducer } from './reducers'
-import {ACTIONS} from './actions'
+import { ACTIONS } from './actions'
 
 export const TodoContext = createContext();
 // const { Provider } = TodoContext;
@@ -20,15 +20,15 @@ export const TodoContext = createContext();
 // //   }
 
 //   return (
-//     <Provider value={value} >
+//     <Provider value={[state, dispatch]} >
 //         {children}
 //     </Provider> 
 //   );
 // }
 
-// export const useGlobalState = () => {
-//   return useContext(TodoContext);
-// }
+export const useGlobalState = () => {
+  return useContext(TodoContext);
+}
 
 
 
