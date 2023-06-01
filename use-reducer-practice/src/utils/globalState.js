@@ -26,9 +26,9 @@ export const TodoContext = createContext();
 //   );
 // }
 
-export const useGlobalState = () => {
-  return useContext(TodoContext);
-}
+// export const useGlobalState = () => {
+//   return useContext(TodoContext);
+// }
 
 
 

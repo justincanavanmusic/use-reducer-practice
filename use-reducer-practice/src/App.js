@@ -1,4 +1,4 @@
-import React, { useReducer, useState } from "react";
+import React, { useReducer, useState, useContext } from "react";
 import { useTodoReducer } from './utils/reducers'
 import { reducer } from './utils/reducers'
 import Todo from "./Todo.js";
@@ -8,7 +8,9 @@ import { TodoProvider, useGlobalState } from './utils/globalState'
 
 
 function App() {
-  const [state , dispatch] = useReducer(reducer, []);
+  const [state, dispatch] = useReducer(reducer, []);
+  // const [ state, dispatch ] = useContext(TodoContext)
+
   // const [state, dispatch] = useGlobalState();
   // const globalState = useGlobalState();
   // const { todoName } = state;
@@ -36,7 +38,7 @@ function App() {
   return (
     <>
     {/* <TodoProvider> */}
-    < TodoContext.Provider value={{ state, dispatch}}>
+    < TodoContext.Provider value={[ state, dispatch]}>
       <form onSubmit={handleSubmit}>
         <input
           type="text"

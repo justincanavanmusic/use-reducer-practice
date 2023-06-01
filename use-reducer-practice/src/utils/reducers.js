@@ -11,17 +11,22 @@ function newTodo(name) {
 
 export const reducer = (state, action) => {
     switch (action.type) {
+
+      // case ACTIONS.SET_NAME:
+      //   console.log(state);
+      //   return [...state,
+      //     // todoName: action.payload.todoName,
+          
+      //   ];
+
       case ACTIONS.ADD_TODO:
         // const todo = newTodo(action.payload.todoName)
         // // console.log(newTodo);
+        console.log(state)
         // return {...state, todo};
       return [...state, newTodo(action.payload.name)];
   
-        // case ACTIONS.SET_NAME:
-        //   console.log(state);
-        //   return {...state,
-        //     todoName: action.payload.todoName,
-        //     };
+       
 
       case ACTIONS.TOGGLE_TODO:
         return state.map((todo) => {
@@ -42,6 +47,6 @@ export const reducer = (state, action) => {
     }
   }
 
-  export function useTodoReducer(initialState) {
-    return useReducer(reducer, initialState)
-  }
+  // export function useTodoReducer(initialState) {
+  //   return useReducer(reducer, initialState)
+  // }

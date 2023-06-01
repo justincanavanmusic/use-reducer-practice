@@ -1,30 +1,46 @@
-import React, { useReducer, useContext } from 'react'
-import { TodoContext } from './utils/globalState'
-import { ACTIONS } from './utils/actions'
-import { useGlobalState } from './utils/globalState'
+import React, { useReducer, useContext } from "react";
+import { TodoContext } from "./utils/globalState";
+import { ACTIONS } from "./utils/actions";
+import { useGlobalState } from "./utils/globalState";
 
+export default function Todo() {
+  const [state, dispatch] = useContext(TodoContext);
 
+  console.log(state);
 
-export default function Todo({ todo }) {
+  // console.log(todoContext.state)
 
-// const [ state, dispatch ] = useGlobalState();
-// const [state, dispatch] = useReducer(reducer, []);
-const { state, dispatch } = useContext(TodoContext)
-
-// console.log(todoContext.state)
-
-
-    return (
-        <div>
-            <span style={{ color: todo.complete ? 'green' : 'red'}}>
-                {todo.name}
+  return (
+    <>
+      <div>
+        {state.map((todo) => (
+          <div key={todo.id}>
+            <span style={{ color: todo.complete ? "green" : "red" }}>
+              {todo.name}
             </span>
-            <button onClick={() => 
-                dispatch({ type: ACTIONS.TOGGLE_TODO, payload: { id: todo.id }})}>Toggle</button>
-            <button onClick={() =>
-                dispatch({type: ACTIONS.DELETE_TODO, payload: { id: todo.id }})
-            }>Delete</button>
-
-        </div>
-    )
+            <button
+              onClick={() =>
+                dispatch({
+                  type: ACTIONS.TOGGLE_TODO,
+                  payload: { id: todo.id },
+                })
+              }
+            >
+              Toggle
+            </button>
+            <button
+              onClick={() =>
+                dispatch({
+                  type: ACTIONS.DELETE_TODO,
+                  payload: { id: todo.id },
+                })
+              }
+            >
+              Delete
+            </button>
+          </div>
+        ))}
+      </div>
+    </>
+  );
 }
